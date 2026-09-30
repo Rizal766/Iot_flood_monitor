@@ -1,0 +1,129 @@
+/* =========================================================
+   shared.css — dimuat SETELAH styles.css di semua halaman.
+   Menyeragamkan sidebar, submenu Pengaturan, dan menu akun.
+   ========================================================= */
+:root { --fm-blue: var(--blue, #1b64d8); --fm-ink: #26303b; --fm-line: #dfe5ec; }
+
+body .sidebar {
+    width: 188px; min-width: 188px; flex: 0 0 188px;
+    background: #fff; border-right: 1px solid var(--fm-line);
+}
+body .sidebar .side-nav { display: flex; flex-direction: column; gap: 2px; padding: 10px 8px; }
+
+/* Ukuran teks dikunci: label selalu 12px, tidak ikut membesar seperti aturan lama `.nav-item span`. */
+body .sidebar .side-link {
+    all: unset; box-sizing: border-box; width: 100%; min-height: 40px;
+    display: flex; align-items: center; gap: 10px; padding: 0 12px;
+    border-radius: 6px; color: var(--fm-ink); cursor: pointer; text-decoration: none;
+    font: 500 12px/1.25 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    transition: background .15s, color .15s;
+}
+body .sidebar .side-link:hover { background: #eef4ff; }
+body .sidebar .side-link:focus-visible,
+body .sidebar .side-sub-link:focus-visible { outline: 2px solid var(--fm-blue); outline-offset: 1px; }
+body .sidebar .side-link.active,
+body .sidebar .side-link.active:hover { background: var(--fm-blue); color: #fff; }
+body .sidebar .side-toggle.is-current { color: var(--fm-blue); font-weight: 600; }
+
+body .sidebar .side-icon { width: 20px; flex: 0 0 20px; text-align: center; font-size: 16px; line-height: 1; }
+body .sidebar .side-text { flex: 1; font-size: 12px; white-space: nowrap; }
+body .sidebar .side-badge {
+    min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #e92828; color: #fff;
+    display: grid; place-items: center; font-size: 10px; font-weight: 600;
+}
+body .sidebar .side-arrow { margin-left: auto; font-size: 14px; transition: transform .2s; }
+body .sidebar .side-group.open .side-arrow { transform: rotate(90deg); }
+
+/* Submenu: animasi buka/tutup tanpa mengubah ukuran teks menu lain. */
+body .sidebar .side-sub {
+    display: grid; grid-template-rows: 0fr; transition: grid-template-rows .22s ease;
+    margin-left: 18px; border-left: 1px solid var(--fm-line);
+}
+body .sidebar .side-group.open .side-sub { grid-template-rows: 1fr; }
+body .sidebar .side-sub-inner { overflow: hidden; display: flex; flex-direction: column; gap: 2px; padding-left: 6px; }
+body .sidebar .side-sub-link {
+    display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 4px 8px; border-radius: 5px;
+    color: var(--fm-ink); text-decoration: none; font: 400 12px/1.25 "Segoe UI", system-ui, sans-serif;
+}
+body .sidebar .side-sub-link:hover { background: #eef4ff; }
+body .sidebar .side-sub-link.active { background: #e3edff; color: var(--fm-blue); font-weight: 600; }
+body .sidebar .side-sub-link .side-icon { width: 16px; flex-basis: 16px; font-size: 13px; }
+body .sidebar .side-sub-link .side-text { white-space: normal; }
+
+@media (max-width: 760px) {
+    body .sidebar { width: 64px; min-width: 64px; flex-basis: 64px; }
+    body .sidebar .side-text, body .sidebar .side-arrow, body .sidebar .side-badge { display: none; }
+    body .sidebar .side-link, body .sidebar .side-sub-link { justify-content: center; padding: 0; }
+    body .sidebar .side-sub { margin-left: 0; border-left: 0; }
+    body .sidebar .side-sub-inner { padding-left: 0; }
+}
+
+/* Menu akun */
+.fm-account { position: relative; }
+.account-menu {
+    display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 3000; min-width: 190px;
+    background: #fff; border: 1px solid var(--fm-line); border-radius: 8px; padding: 6px;
+    box-shadow: 0 10px 28px rgba(20, 32, 51, .16); color: var(--fm-ink);
+}
+.fm-account.menu-open .account-menu { display: block; }
+.account-menu-user { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--fm-line); margin-bottom: 4px; }
+.account-menu-user b { font-size: 12px; } .account-menu-user small { font-size: 11px; color: #6b7785; }
+.account-menu-logout {
+    width: 100%; text-align: left; padding: 8px 10px; border: 0; border-radius: 5px; background: transparent;
+    color: #c62828; font: 600 12px "Segoe UI", system-ui, sans-serif; cursor: pointer;
+}
+.account-menu-logout:hover { background: #fdecec; }
+
+/* =========================================================
+   Halaman bisa di-scroll ke bawah (semua halaman)
+   ========================================================= */
+html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+body .topbar { position: sticky; top: 0; z-index: 1000; }
+body .layout, body .app-layout { height: auto !important; min-height: calc(100vh - 61px); overflow: visible !important; align-items: stretch; }
+body .main-content { height: auto !important; min-height: 0; overflow: visible !important; min-width: 0; }
+body .sidebar { position: sticky; top: 61px; align-self: flex-start; height: calc(100vh - 61px) !important; min-height: 0 !important; overflow-y: auto; }
+
+/* =========================================================
+   Menu akun & Edit Profil
+   ========================================================= */
+.account-menu-item {
+    width: 100%; text-align: left; padding: 8px 10px; border: 0; border-radius: 5px; background: transparent;
+    color: var(--fm-ink); font: 500 12px "Segoe UI", system-ui, sans-serif; cursor: pointer;
+}
+.account-menu-item:hover { background: #eef4ff; }
+.account-menu-item.danger { color: #c62828; } .account-menu-item.danger:hover { background: #fdecec; }
+.avatar.has-photo { background-size: cover; background-position: center; color: transparent; }
+
+.profile-dialog { border: 0; border-radius: 12px; padding: 0; width: min(440px, calc(100vw - 24px)); max-height: calc(100vh - 32px); box-shadow: 0 24px 60px rgba(10, 24, 44, .3); color: var(--fm-ink); font-family: "Segoe UI", system-ui, sans-serif; }
+.profile-dialog::backdrop { background: rgba(10, 24, 44, .45); }
+.profile-dialog form { display: flex; flex-direction: column; gap: 12px; padding: 20px 22px; }
+.profile-dialog header { display: flex; justify-content: space-between; align-items: center; }
+.profile-dialog h2 { font-size: 18px; margin: 0; }
+.profile-dialog .pf-x { border: 0; background: transparent; font-size: 24px; line-height: 1; cursor: pointer; color: #66727f; }
+.profile-dialog label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 600; }
+.profile-dialog input { height: 38px; padding: 0 12px; border: 1px solid var(--fm-line); border-radius: 7px; font: 400 13px inherit; font-family: inherit; }
+.profile-dialog input:focus { outline: 2px solid var(--fm-blue); border-color: var(--fm-blue); }
+.profile-dialog input:disabled { background: #f3f6f9; color: #7a8592; }
+.profile-dialog fieldset { border: 1px solid var(--fm-line); border-radius: 8px; padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 10px; margin: 0; }
+.profile-dialog legend { font-size: 12px; font-weight: 700; padding: 0 6px; } .profile-dialog legend small { font-weight: 400; color: #7a8592; }
+.pf-photo { display: flex; align-items: center; gap: 14px; }
+.pf-photo > div { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; } .pf-photo small { flex-basis: 100%; color: #7a8592; font-size: 11px; }
+.pf-avatar { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--fm-blue); color: #fff; font-size: 26px; font-weight: 600; flex: 0 0 64px; }
+.pf-btn { display: inline-flex; align-items: center; justify-content: center; height: 34px; padding: 0 14px; border: 1px solid var(--fm-line); border-radius: 7px; background: #fff; font: 600 12px "Segoe UI", system-ui, sans-serif; cursor: pointer; color: var(--fm-ink); }
+.pf-btn:hover { background: #f1f6ff; }
+.pf-btn.primary { background: var(--fm-blue); border-color: var(--fm-blue); color: #fff; } .pf-btn.primary:hover { filter: brightness(.93); }
+.pf-error { min-height: 16px; margin: 0; color: #b42318; font-size: 12px; }
+.profile-dialog footer { display: flex; justify-content: flex-end; gap: 8px; }
+.fm-toast { position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; z-index: 5000; background: #14243a; color: #fff; padding: 11px 18px; border-radius: 8px; font: 500 13px "Segoe UI", system-ui, sans-serif; transition: .25s; }
+.fm-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Akun di topbar: satu markup untuk semua halaman, diisi dari sesi login */
+.fm-account { display: flex; align-items: center; gap: 9px; padding: 4px 8px; border-radius: 8px; cursor: pointer; color: var(--fm-ink); flex-shrink: 0; font-family: "Segoe UI", system-ui, sans-serif; }
+.fm-account:hover, .fm-account.menu-open { background: #eef4ff; }
+.fm-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--fm-blue); color: #fff; display: grid; place-items: center; font-size: 14px; font-weight: 600; flex: 0 0 34px; background-size: cover; background-position: center; }
+.fm-avatar.has-photo { color: transparent; }
+.fm-account-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.fm-account-text b { font-size: 12px; font-weight: 600; white-space: nowrap; }
+.fm-account-text small { font-size: 11px; color: #66727f; }
+.fm-caret { font-size: 13px; color: #66727f; }
+@media (max-width: 640px) { .fm-account-text, .fm-caret { display: none; } }

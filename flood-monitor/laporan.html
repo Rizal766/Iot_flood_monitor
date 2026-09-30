@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laporan - IoT Flood Monitor</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            💧
+        </div>
+
+        <div class="brand-text">
+            <h1>IoT Flood Monitor</h1>
+            <span>Early Warning System</span>
+        </div>
+
+    </div>
+
+
+    <div class="global-search">
+
+        <span>⌕</span>
+
+        <input
+            type="text"
+            id="globalSearch"
+            placeholder="Cari lokasi,sensor,atau nama daerah..."
+        >
+
+    </div>
+
+
+    <div class="top-right">
+
+        <div class="weather">
+
+            <span class="weather-icon">
+                ☁
+            </span>
+
+            <div>
+                <strong>28°C</strong>
+                <small>Berawan</small>
+            </div>
+
+        </div>
+
+
+        <div class="city">
+
+            <strong>Kota Semarang</strong>
+
+            <small>
+                12:52<br>
+                10 Sep 2026
+            </small>
+
+        </div>
+
+
+        <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN LAYOUT
+===================================================== -->
+
+<div class="layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link active"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group">
+    <button type="button" class="side-link side-toggle" aria-expanded="false"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+
+        <!-- FLOOD CARD -->
+
+        <div class="sidebar-flood">
+
+            <div class="flood-image"></div>
+
+            <div class="flood-overlay">
+
+                <strong>
+                    Bersama Teknologi,
+                    <br>
+                    Kita Lebih Siap
+                    <br>
+                    Menghadapi Banjir
+                </strong>
+
+                <small>
+                    IoT for Safer Tomorrow
+                </small>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================== -->
+
+    <main class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h2>
+                    ▣ Laporan
+                </h2>
+
+                <p>
+                    Kelola dan buat laporan monitoring banjir
+                    untuk pimpinan dan instansi terkait.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONTENT GRID
+        ================================================== -->
+
+        <div class="report-layout">
+
+
+            <!-- =================================================
+                 LEFT CONTENT
+            ================================================== -->
+
+            <section class="report-main">
+
+
+                <!-- ==============================
+                     STATISTICS
+                =============================== -->
+
+                <div class="report-stats">
+
+
+                    <div class="report-stat">
+
+                        <div class="stat-icon blue">
+                            ▦
+                        </div>
+
+                        <div>
+                            <span>Total Laporan</span>
+                            <strong>24</strong>
+                            <small>↑ 12% dari bulan lalu</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-stat">
+
+                        <div class="stat-icon black">
+                            □
+                        </div>
+
+                        <div>
+                            <span>Laporan Bulanan</span>
+                            <strong>8</strong>
+                            <small>↑ 33% dari bulan lalu</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-stat">
+
+                        <div class="stat-icon yellow">
+                            ⚠
+                        </div>
+
+                        <div>
+                            <span>Laporan Kejadian</span>
+                            <strong>5</strong>
+                            <small>↑ 67% dari bulan lalu</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-stat">
+
+                        <div class="stat-icon dark">
+                            ▤
+                        </div>
+
+                        <div>
+                            <span>Laporan Harian</span>
+                            <strong>11</strong>
+                            <small>↑ 10% dari bulan lalu</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==============================
+                     REPORT LIST
+                =============================== -->
+
+                <section class="reports-card">
+
+                    <h3>
+                        Daftar Laporan Tersimpan
+                    </h3>
+
+
+                    <!-- FILTER -->
+
+                    <div class="report-filter">
+
+                        <div class="report-search">
+
+                            <span>⌕</span>
+
+                            <input
+                                type="text"
+                                id="reportSearch"
+                                placeholder="Cari nama laporan..."
+                            >
+
+                        </div>
+
+
+                        <select id="periodFilter">
+
+                            <option value="all">
+                                1 Jan 2026 - 26 Jun 2026
+                            </option>
+
+                            <option value="juni">
+                                Juni 2026
+                            </option>
+
+                            <option value="mei">
+                                Mei 2026
+                            </option>
+
+                        </select>
+
+
+                        <select id="areaFilter">
+
+                            <option value="all">
+                                Semua Wilayah
+                            </option>
+
+                            <option value="semarang">
+                                Semarang
+                            </option>
+
+                            <option value="garang">
+                                Kali Garang
+                            </option>
+
+                            <option value="demak">
+                                Demak
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- TABLE -->
+
+                    <div class="report-table-wrapper">
+
+                        <table class="report-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Nama Laporan
+                                    </th>
+
+                                    <th>
+                                        Jenis
+                                    </th>
+
+                                    <th>
+                                        Periode
+                                    </th>
+
+                                    <th>
+                                        Wilayah/Sensor
+                                    </th>
+
+                                    <th>
+                                        Dibuat Oleh
+                                    </th>
+
+                                    <th>
+                                        Tanggal Dibuat
+                                    </th>
+
+                                    <th>
+                                        Aksi
+                                    </th>
+
+                                    <th></th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="reportBody">
+
+
+                                <tr
+                                    data-name="Laporan Harian 28 Jun 2026"
+                                    data-type="harian"
+                                    data-area="semarang"
+                                >
+
+                                    <td>
+                                        <span class="file-icon">
+                                            ▣
+                                        </span>
+                                        Laporan Harian 28 Jun 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="type blue">
+                                            Harian
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        26 Jun 2026
+                                    </td>
+
+                                    <td>
+                                        Semarang (Semua)
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            Fatmi Nurfaizah
+                                            <br>
+                                            Admin
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        26 Jun 2026 09:15
+                                    </td>
+
+                                    <td class="download-actions">
+
+                                        <button
+                                            class="pdf-btn"
+                                            data-report="Laporan Harian 28 Jun 2026"
+                                        >
+                                            ▣ PDF
+                                        </button>
+
+                                        <button
+                                            class="excel-btn"
+                                            data-report="Laporan Harian 28 Jun 2026"
+                                        >
+                                            ▣ Excel
+                                        </button>
+
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            class="more-btn"
+                                        >
+                                            ⋮
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr
+                                    data-name="Laporan Mingguan 16-22 Juni"
+                                    data-type="mingguan"
+                                    data-area="demak"
+                                >
+
+                                    <td>
+                                        <span class="file-icon">
+                                            ▣
+                                        </span>
+                                        Laporan Mingguan 16-22 Juni
+                                    </td>
+
+                                    <td>
+                                        <span class="type purple">
+                                            Mingguan
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        16 - 22 Jun 2026
+                                    </td>
+
+                                    <td>
+                                        Semarang, Demak
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            Siti Aminah
+                                            <br>
+                                            Operator
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        22 Jun 2026 14:32
+                                    </td>
+
+                                    <td class="download-actions">
+
+                                        <button class="pdf-btn">
+                                            ▣ PDF
+                                        </button>
+
+                                        <button class="excel-btn">
+                                            ▣ Excel
+                                        </button>
+
+                                    </td>
+
+                                    <td>
+                                        <button class="more-btn">
+                                            ⋮
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr
+                                    data-name="Laporan Bulanan Mei 2026"
+                                    data-type="bulanan"
+                                    data-area="semarang"
+                                >
+
+                                    <td>
+                                        <span class="file-icon">
+                                            ▣
+                                        </span>
+                                        Laporan Bulanan Mei 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="type green">
+                                            Bulanan
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        1 - 31 Mei 2026
+                                    </td>
+
+                                    <td>
+                                        Semarang (Semua)
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            Ahmad Fauzi
+                                            <br>
+                                            Operator
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        31 Mei 2026 16:45
+                                    </td>
+
+                                    <td class="download-actions">
+
+                                        <button class="pdf-btn">
+                                            ▣ PDF
+                                        </button>
+
+                                        <button class="excel-btn">
+                                            ▣ Excel
+                                        </button>
+
+                                    </td>
+
+                                    <td>
+                                        <button class="more-btn">
+                                            ⋮
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr
+                                    data-name="Laporan Kejadian Banjir"
+                                    data-type="kejadian"
+                                    data-area="garang"
+                                >
+
+                                    <td>
+                                        <span class="file-icon">
+                                            ▣
+                                        </span>
+                                        Laporan Kejadian Banjir
+                                    </td>
+
+                                    <td>
+                                        <span class="type red">
+                                            Kejadian
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        24 Mei 2026
+                                    </td>
+
+                                    <td>
+                                        Kali Garang, Semarang
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            Rizky Maulana
+                                            <br>
+                                            Operator
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        24 Mei 2026 08:21
+                                    </td>
+
+                                    <td class="download-actions">
+
+                                        <button class="pdf-btn">
+                                            ▣ PDF
+                                        </button>
+
+                                        <button class="excel-btn">
+                                            ▣ Excel
+                                        </button>
+
+                                    </td>
+
+                                    <td>
+                                        <button class="more-btn">
+                                            ⋮
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr
+                                    data-name="Laporan Harian 15 Juni 2026"
+                                    data-type="harian"
+                                    data-area="semarang"
+                                >
+
+                                    <td>
+                                        <span class="file-icon">
+                                            ▣
+                                        </span>
+                                        Laporan Harian 15 Juni 2026
+                                    </td>
+
+                                    <td>
+                                        <span class="type blue">
+                                            Harian
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        15 Jun 2026
+                                    </td>
+
+                                    <td>
+                                        Semarang (Semua)
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            Dewi Lestari
+                                            <br>
+                                            Operator
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        15 Jun 2026 10:12
+                                    </td>
+
+                                    <td class="download-actions">
+
+                                        <button class="pdf-btn">
+                                            ▣ PDF
+                                        </button>
+
+                                        <button class="excel-btn">
+                                            ▣ Excel
+                                        </button>
+
+                                    </td>
+
+                                    <td>
+                                        <button class="more-btn">
+                                            ⋮
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+
+
+                                <tr
+                                    data-name="Laporan Mingguan 9-15 Juni"
+                                    data-type="mingguan"
+                                    data-area="garang"
+                                >
+
+                                    <td>
+                                        <span class="file-icon">
+                                            ▣
+                                        </span>
+                                        Laporan Mingguan 9-15 Juni
+                                    </td>
+
+                                    <td>
+                                        <span class="type purple">
+                                            Mingguan
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        9 - 15 Jun 2026
+                                    </td>
+
+                                    <td>
+                                        Kali Timo, Semarang
+                                    </td>
+
+                                    <td>
+                                        <small>
+                                            Budi Santoso
+                                        </small>
+                                    </td>
+
+                                    <td>
+                                        15 Jun 2026 09:03
+                                    </td>
+
+                                    <td class="download-actions">
+
+                                        <button class="pdf-btn">
+                                            ▣ PDF
+                                        </button>
+
+                                        <button class="excel-btn">
+                                            ▣ Excel
+                                        </button>
+
+                                    </td>
+
+                                    <td>
+                                        <button class="more-btn">
+                                            ⋮
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+
+                    <!-- PAGINATION -->
+
+                    <div class="pagination">
+
+                        <button id="previousPage">
+                            ‹
+                        </button>
+
+                        <button class="active">
+                            1
+                        </button>
+
+                        <button>
+                            2
+                        </button>
+
+                        <button>
+                            3
+                        </button>
+
+                        <button>
+                            4
+                        </button>
+
+                        <button id="nextPage">
+                            ›
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ==============================
+                     BOTTOM REPORT STATUS
+                =============================== -->
+
+                <div class="bottom-reports">
+
+
+                    <!-- EMPTY -->
+
+                    <div class="bottom-card empty-report">
+
+                        <div class="bottom-icon">
+                            ▣
+                        </div>
+
+                        <strong>
+                            Belum ada laporan
+                        </strong>
+
+                        <p>
+                            Mulai dari membuat laporan pertama Anda
+                        </p>
+
+                        <button
+                            type="button"
+                            class="primary-button"
+                            id="bottomCreateButton"
+                        >
+                            + Buat Laporan
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- PROCESS -->
+
+                    <div class="bottom-card processing">
+
+                        <h3>
+                            Laporan Sedang Dibuat
+                        </h3>
+
+                        <div class="processing-content">
+
+                            <div class="loading-circle">
+                                ◉
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Laporan Bulanan Juni 2026
+                                </strong>
+
+                                <small>
+                                    Sedang diproses... 45%
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress">
+                            <span></span>
+                        </div>
+
+                        <small>
+                            Dibuat oleh Ahmad Fauzi (Operator)
+                            <br>
+                            Mulai 26 Jun 2026, 10:32
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- FAILED -->
+
+                    <div class="bottom-card failed">
+
+                        <h3>
+                            Laporan Gagal
+                        </h3>
+
+                        <div class="failed-content">
+
+                            <div class="failed-icon">
+                                ×
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Laporan Kejadian -
+                                    20 Juni 2026
+                                </strong>
+
+                                <small>
+                                    Gagal membuat laporan.
+                                    Silakan coba lagi.
+                                </small>
+
+                                <small>
+                                    Dibuat oleh Siti Aminah
+                                    (Operator)
+                                </small>
+
+                                <small>
+                                    26 Jun 2026, 08:14
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="retry-button"
+                        >
+                            Coba Lagi
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CREATE REPORT PANEL
+            ================================================== -->
+
+            <aside class="create-panel">
+
+                <h3>
+                    Buat Laporan
+                </h3>
+
+
+                <!-- TYPE -->
+
+                <div class="form-section">
+
+                    <label>
+                        1. Jenis Laporan
+                    </label>
+
+                    <div class="report-types">
+
+                        <button
+                            type="button"
+                            class="report-type active"
+                            data-type="harian"
+                        >
+                            ▣
+                            <span>Harian</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="report-type"
+                            data-type="mingguan"
+                        >
+                            ▣
+                            <span>Mingguan</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="report-type"
+                            data-type="bulanan"
+                        >
+                            ▣
+                            <span>Bulanan</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="report-type"
+                            data-type="kejadian"
+                        >
+                            ⚠
+                            <span>Kejadian</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PERIOD -->
+
+                <div class="form-section">
+
+                    <label>
+                        2. Periode
+                    </label>
+
+                    <input
+                        type="text"
+                        value="26 Jun 2026 - 26 Jun 2026"
+                        id="reportPeriod"
+                    >
+
+                </div>
+
+
+
+                <!-- AREA -->
+
+                <div class="form-section">
+
+                    <label>
+                        3. Wilayah / Sensor
+                    </label>
+
+                    <select id="reportArea">
+
+                        <option>
+                            Semarang (Semua)
+                        </option>
+
+                        <option>
+                            Kali Garang
+                        </option>
+
+                        <option>
+                            Kali Timo
+                        </option>
+
+                        <option>
+                            Demak
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- CONTENT -->
+
+                <div class="form-section">
+
+                    <label>
+                        4. Isi yang Disertakan
+                    </label>
+
+                    <label class="checkbox-row">
+                        <input type="checkbox" checked>
+                        Ringkasan status
+                    </label>
+
+                    <label class="checkbox-row">
+                        <input type="checkbox" checked>
+                        Grafik
+                    </label>
+
+                    <label class="checkbox-row">
+                        <input type="checkbox" checked>
+                        Daftar alert & waktu respons
+                    </label>
+
+                    <label class="checkbox-row">
+                        <input type="checkbox">
+                        Sensor bermasalah
+                    </label>
+
+                </div>
+
+
+
+                <!-- SCHEDULE -->
+
+                <div class="form-section">
+
+                    <label>
+                        5. Jadwalkan (Opsional)
+                    </label>
+
+                    <label class="switch-row">
+
+                        <input
+                            type="checkbox"
+                            id="scheduleSwitch"
+                        >
+
+                        <span class="switch"></span>
+
+                        Kirim otomatis via email
+
+                    </label>
+
+
+                    <div
+                        class="schedule-fields"
+                        id="scheduleFields"
+                    >
+
+                        <div>
+
+                            <label>
+                                Frekuensi
+                            </label>
+
+                            <select>
+                                <option>
+                                    Tidak ada
+                                </option>
+
+                                <option>
+                                    Harian
+                                </option>
+
+                                <option>
+                                    Mingguan
+                                </option>
+
+                                <option>
+                                    Bulanan
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div>
+
+                            <label>
+                                Email tujuan
+                            </label>
+
+                            <input
+                                type="email"
+                                placeholder="Pisahkan dengan koma"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ACTION -->
+
+                <div class="create-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-button"
+                        id="cancelReport"
+                    >
+                        Batal
+                    </button>
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="createReport"
+                    >
+                        Buat Laporan
+                    </button>
+
+                </div>
+
+
+
+                <!-- PREVIEW -->
+
+                <div class="report-preview">
+
+                    <div class="preview-header">
+                        <strong>
+                            Laporan Harian
+                        </strong>
+
+                        <small>
+                            26 Jun 2026
+                        </small>
+                    </div>
+
+                    <div class="preview-body">
+
+                        <div class="preview-chart">
+                            ▂▃▆▄▇▅▆▃▅
+                        </div>
+
+                        <div class="preview-stat">
+                            96%
+                        </div>
+
+                    </div>
+
+                    <div class="preview-actions">
+
+                        <button>
+                            Preview
+                        </button>
+
+                        <button class="pdf-preview">
+                            Unduh PDF
+                        </button>
+
+                        <button class="excel-preview">
+                            Unduh Excel
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script src="js/script.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+</html>

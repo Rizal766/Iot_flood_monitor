@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IoT Flood Monitor</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <!-- CSS sendiri -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                💧
+            </div>
+
+            <div class="brand-text">
+                <h1>IoT Flood Monitor</h1>
+                <span>Early Warning System</span>
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <span>🔍</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Cari lokasi, sensor, atau nama daerah..."
+            >
+
+        </div>
+
+
+        <!-- INFO KANAN -->
+
+        <div class="top-info">
+
+            <div class="top-weather">
+
+                <span class="weather-icon">☁</span>
+
+                <div>
+                    <b>28°C</b>
+                    <small>Berawan</small>
+                </div>
+
+            </div>
+
+
+            <div class="city-info">
+
+                <b>Kota Semarang</b>
+
+                <small>
+                    12:52<br>
+                    10 Sep 2026
+                </small>
+
+            </div>
+
+
+            <!-- GUEST -->
+
+            <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         LAYOUT
+    ====================================================== -->
+
+    <div class="layout">
+
+
+        <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link active"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group">
+    <button type="button" class="side-link side-toggle" aria-expanded="false"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+        <div class="sidebar-flood">
+
+            <div class="flood-overlay">
+
+                <b>
+                    Bersama Teknologi,<br>
+                    Kita Lebih Siap<br>
+                    Menghadapi Banjir
+                </b>
+
+                <small>
+                    IoT Flood Monitor
+                </small>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+        <!-- =================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <main class="content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2 id="pageTitle">
+                        Dashboard
+                    </h2>
+
+                    <p id="pageSubtitle">
+                        Monitoring kondisi banjir secara real-time.
+                    </p>
+
+                </div>
+
+
+                <div class="live-status">
+
+                    <span></span>
+                    LIVE
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STAT CARD
+            ================================================== -->
+
+            <section class="stats-grid">
+
+
+                <!-- TOTAL SENSOR -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        ▰
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Total sensor</span>
+
+                        <strong>24</strong>
+
+                        <small>
+                            Aktif 22 | Offline 2
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RISIKO -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">
+                        ▲
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Lokasi berisiko</span>
+
+                        <strong>3</strong>
+
+                        <small class="danger-text">
+                            Siaga 1 | Waspada 2 | Aman 19
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HUJAN -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ♨
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Curah hujan (24 Jam)</span>
+
+                        <strong>86mm</strong>
+
+                        <small class="green-text">
+                            +12% Dari Kemarin
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TMA -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon cyan">
+                        〰
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Tinggi muka air</span>
+
+                        <strong>118cm</strong>
+
+                        <small class="green-text">
+                            +8% Dari Kemarin
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- LEFT -->
+
+                <div class="left-column">
+
+
+                    <!-- MAP -->
+
+                    <article class="card map-card">
+
+                        <div class="card-header">
+
+                            <h3>
+                                Peta Monitoring Lokasi
+                            </h3>
+
+                            <button
+                                class="header-button"
+                                id="mapFocusButton"
+                            >
+                                ⛶
+                            </button>
+
+                        </div>
+
+
+                        <div class="map-container">
+
+                            <!-- LEAFLET MAP -->
+
+                            <div id="map"></div>
+
+
+                            <!-- LEGEND -->
+
+                            <div class="map-legend">
+
+                                <div>
+                                    <i class="dot normal"></i>
+                                    Aman
+                                </div>
+
+                                <div>
+                                    <i class="dot waspada"></i>
+                                    Waspada
+                                </div>
+
+                                <div>
+                                    <i class="dot siaga"></i>
+                                    Siaga
+                                </div>
+
+                                <div>
+                                    <i class="dot bahaya"></i>
+                                    Bahaya
+                                </div>
+
+                                <div>
+                                    <i class="dot offline"></i>
+                                    Offline
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- BOTTOM GRID -->
+
+                    <div class="bottom-grid">
+
+
+                        <!-- CHART -->
+
+                        <article class="card chart-card">
+
+                            <div class="card-header">
+
+                                <h3>
+                                    Grafik Tinggi Muka Air (TMA)
+                                </h3>
+
+                                <span>
+                                    24 jam
+                                </span>
+
+                            </div>
+
+
+                            <div class="chart-wrapper">
+
+                                <div class="chart-grid"></div>
+
+                                <svg
+                                    viewBox="0 0 500 180"
+                                    preserveAspectRatio="none"
+                                >
+
+                                    <polyline
+                                        class="chart-red"
+                                        points="
+                                        0,125
+                                        50,138
+                                        100,132
+                                        150,126
+                                        200,118
+                                        250,124
+                                        300,111
+                                        350,105
+                                        400,108
+                                        450,84
+                                        500,73
+                                        "
+                                    />
+
+                                    <polyline
+                                        class="chart-orange"
+                                        points="
+                                        0,145
+                                        50,151
+                                        100,147
+                                        150,140
+                                        200,145
+                                        250,135
+                                        300,140
+                                        350,128
+                                        400,131
+                                        450,113
+                                        500,105
+                                        "
+                                    />
+
+                                    <polyline
+                                        class="chart-yellow"
+                                        points="
+                                        0,162
+                                        50,167
+                                        100,163
+                                        150,157
+                                        200,156
+                                        250,159
+                                        300,152
+                                        350,149
+                                        400,145
+                                        450,137
+                                        500,131
+                                        "
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+                            <!-- LABEL WAKTU -->
+
+                            <div class="chart-labels">
+
+                                <span>00:00</span>
+                                <span>06:00</span>
+                                <span>12:00</span>
+                                <span>18:00</span>
+                                <span>24:00</span>
+
+                            </div>
+
+
+                            <!-- LEGEND GRAFIK -->
+
+                            <div class="chart-legends">
+
+                                <span>
+                                    <i class="red"></i>
+                                    BNA-003 (Bahaya)
+                                </span>
+
+                                <span>
+                                    <i class="orange"></i>
+                                    GRC-003 (Siaga)
+                                </span>
+
+                                <span>
+                                    <i class="yellow"></i>
+                                    GRC-012 (Waspada)
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+
+                        <!-- SENSOR TABLE -->
+
+                        <article class="card sensor-card">
+
+                            <div class="card-header">
+
+                                <h3>
+                                    Daftar sensor
+                                </h3>
+
+                                <button
+                                    class="text-button"
+                                    id="showSensors"
+                                >
+                                    Lihat semua
+                                </button>
+
+                            </div>
+
+
+                            <div class="sensor-table">
+
+                                <div class="sensor-row sensor-head">
+
+                                    <span>ID Sensor</span>
+                                    <span>Lokasi</span>
+                                    <span>Tinggi air</span>
+                                    <span>Status</span>
+                                    <span>Update</span>
+
+                                </div>
+
+
+                                <div class="sensor-row">
+
+                                    <span>BNA-003</span>
+
+                                    <span>
+                                        Kali Banjir Kanal Barat
+                                    </span>
+
+                                    <span>248CM</span>
+
+                                    <span class="status bahaya">
+                                        Bahaya
+                                    </span>
+
+                                    <span>11:12</span>
+
+                                </div>
+
+
+                                <div class="sensor-row">
+
+                                    <span>GRC-007</span>
+
+                                    <span>
+                                        Kali Garang
+                                    </span>
+
+                                    <span>165CM</span>
+
+                                    <span class="status siaga">
+                                        Siaga
+                                    </span>
+
+                                    <span>10:48</span>
+
+                                </div>
+
+
+                                <div class="sensor-row">
+
+                                    <span>BRG-012</span>
+
+                                    <span>
+                                        Brongkalan
+                                    </span>
+
+                                    <span>89CM</span>
+
+                                    <span class="status waspada">
+                                        Waspada
+                                    </span>
+
+                                    <span>09:32</span>
+
+                                </div>
+
+
+                                <div class="sensor-row">
+
+                                    <span>SWO-001</span>
+
+                                    <span>
+                                        Sungai Muktiharjo
+                                    </span>
+
+                                    <span>78CM</span>
+
+                                    <span class="status normal">
+                                        Normal
+                                    </span>
+
+                                    <span>08:17</span>
+
+                                </div>
+
+
+                                <div class="sensor-row">
+
+                                    <span>TM-021</span>
+
+                                    <span>
+                                        Kali Tinja
+                                    </span>
+
+                                    <span>34CM</span>
+
+                                    <span class="status normal">
+                                        Normal
+                                    </span>
+
+                                    <span>07:56</span>
+
+                                </div>
+
+                            </div>
+
+
+                            <small class="sensor-footer">
+                                Menampilkan 5 dari 24 sensor
+                            </small>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT -->
+
+                <div class="right-column">
+
+
+                    <!-- ALERT -->
+
+                    <article class="card alert-card">
+
+                        <div class="card-header">
+
+                            <h3 class="alert-title">
+                                ⚠ Alert Terbaru
+                            </h3>
+
+                        </div>
+
+
+                        <div class="alert-list">
+
+                            <div class="alert-item">
+
+                                <div class="alert-icon danger">
+                                    !
+                                </div>
+
+                                <div class="alert-info">
+
+                                    <b>
+                                        Sensor BNA-003 -
+                                        Kali Banjir Kanal Barat
+                                    </b>
+
+                                    <small>
+                                        Tinggi muka air mencapai 248cm
+                                    </small>
+
+                                </div>
+
+                                <strong class="alert-danger">
+                                    Bahaya
+                                </strong>
+
+                                <time>
+                                    11:12
+                                </time>
+
+                            </div>
+
+
+                            <div class="alert-item">
+
+                                <div class="alert-icon danger">
+                                    !
+                                </div>
+
+                                <div class="alert-info">
+
+                                    <b>
+                                        Sensor GRC-007 -
+                                        Kali Garang
+                                    </b>
+
+                                    <small>
+                                        Tinggi muka air 165cm
+                                    </small>
+
+                                </div>
+
+                                <strong class="alert-siaga">
+                                    Siaga
+                                </strong>
+
+                                <time>
+                                    10:48
+                                </time>
+
+                            </div>
+
+
+                            <div class="alert-item">
+
+                                <div class="alert-icon warning">
+                                    !
+                                </div>
+
+                                <div class="alert-info">
+
+                                    <b>
+                                        Sensor BRG-012 -
+                                        Brongkalan
+                                    </b>
+
+                                    <small>
+                                        Curah hujan meningkat 45mm
+                                    </small>
+
+                                </div>
+
+                                <strong class="alert-waspada">
+                                    Waspada
+                                </strong>
+
+                                <time>
+                                    09:32
+                                </time>
+
+                            </div>
+
+
+                            <div class="alert-item">
+
+                                <div class="alert-icon offline">
+                                    ⌁
+                                </div>
+
+                                <div class="alert-info">
+
+                                    <b>
+                                        Sensor SGM-016
+                                    </b>
+
+                                    <small>
+                                        Koneksi normal
+                                    </small>
+
+                                </div>
+
+                                <strong class="alert-normal">
+                                    Normal
+                                </strong>
+
+                                <time>
+                                    08:14
+                                </time>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- WEATHER -->
+
+                    <article class="card weather-card">
+
+                        <div class="card-header">
+
+                            <h3>
+                                Cuaca & Prediksi
+                            </h3>
+
+                            <b>
+                                Prediksi 3 hari
+                            </b>
+
+                        </div>
+
+
+                        <div class="weather-content">
+
+                            <div class="current-weather">
+
+                                <span>☁️</span>
+
+                                <div>
+
+                                    <strong>
+                                        28°C
+                                    </strong>
+
+                                    <b>
+                                        Berawan
+                                    </b>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="forecast">
+
+                                <span>
+                                    Kam 10 Sep
+                                    <b>90%</b>
+                                    32°/25°
+                                </span>
+
+                                <span>
+                                    Jum 11 Sep
+                                    <b>80%</b>
+                                    32°/25°
+                                </span>
+
+                                <span>
+                                    Sab 12 Sep
+                                    <b>70%</b>
+                                    32°/25°
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- INTEGRATION -->
+
+                    <article class="card integration-card">
+
+                        <div class="card-header">
+
+                            <h3>
+                                Notifikasi & Integrasi
+                            </h3>
+
+                        </div>
+
+
+                        <div class="integration-row">
+                            <span>💬</span>
+                            <b>SMS Gateway</b>
+                            <strong>aktif</strong>
+                            <i>›</i>
+                        </div>
+
+                        <div class="integration-row">
+                            <span>🟢</span>
+                            <b>WhatsApp</b>
+                            <strong>aktif</strong>
+                            <i>›</i>
+                        </div>
+
+                        <div class="integration-row">
+                            <span>✉️</span>
+                            <b>Email</b>
+                            <strong>aktif</strong>
+                            <i>›</i>
+                        </div>
+
+                        <div class="integration-row">
+                            <span>📱</span>
+                            <b>Push Notification</b>
+                            <strong>aktif</strong>
+                            <i>›</i>
+                        </div>
+
+                        <div class="integration-row">
+                            <span>🔔</span>
+                            <b>Sirene Remote</b>
+                            <strong>aktif</strong>
+                            <i>›</i>
+                        </div>
+
+                        <div class="integration-row">
+                            <span>🔗</span>
+                            <b>API Integration</b>
+                            <strong>aktif</strong>
+                            <i>›</i>
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- FLOOD CARD -->
+
+                    <article class="flood-card">
+
+                        <div class="flood-overlay">
+
+                            <b>
+                                Bersama Teknologi,<br>
+                                Kita Lebih Siap<br>
+                                Menghadapi Banjir
+                            </b>
+
+                            <small>
+                                IoT Flood Monitor
+                            </small>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- TOAST -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+
+    <!-- Leaflet JS -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- JavaScript sendiri -->
+
+    <script src="js/script.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>

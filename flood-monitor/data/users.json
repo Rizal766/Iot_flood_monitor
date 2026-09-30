@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "username": "admin",    "email": "admin@floodmonitor.id",    "phone": "081234567890", "password": "admin123",    "name": "Admin",   "role": "Administrator" },
+    { "username": "operator", "email": "operator@floodmonitor.id", "phone": "081234567891", "password": "operator123", "name": "Operator Banjir",  "role": "Operator" },
+    { "username": "petugas",  "email": "petugas@floodmonitor.id",  "phone": "081234567892", "password": "petugas123",  "name": "Petugas Lapangan", "role": "Petugas" }
+  ]
+}

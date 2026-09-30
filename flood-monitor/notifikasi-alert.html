@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifikasi & Alert - IoT Flood Monitor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-mark">💧</div>
+
+        <div>
+            <div class="brand-title">IOT Flood Monitor</div>
+            <div class="brand-subtitle">Early Warning System</div>
+        </div>
+    </div>
+
+    <div class="global-search">
+        <span>⌕</span>
+        <input
+            id="globalSearch"
+            type="search"
+            placeholder="Cari lokasi,sensor,atau nama daerah..."
+        >
+    </div>
+
+    <div class="top-info">
+
+        <div class="weather">
+            <span class="weather-icon">☁</span>
+
+            <div>
+                <b>28°C</b>
+                <small>Berawan</small>
+            </div>
+        </div>
+
+        <div class="city">
+            Kota Semarang
+        </div>
+
+        <div class="date-time">
+            <span>12:52</span>
+            <small>10 Sep 2026</small>
+        </div>
+
+        <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+    </div>
+
+</header>
+
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link active"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group">
+    <button type="button" class="side-link side-toggle" aria-expanded="false"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+
+        <div class="sidebar-promo">
+
+            <div class="promo-image"></div>
+
+            <div class="promo-copy">
+                Bersama Teknologi,<br>
+                Kita Lebih Siap<br>
+                Menghadapi Banjir
+            </div>
+
+            <small>
+                ≈ IoT for a Safer Tomorrow
+            </small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- PAGE TITLE -->
+        <section class="page-heading">
+
+            <div class="heading-icon">
+                ♧
+            </div>
+
+            <div>
+                <h1>Notifikasi & Alert</h1>
+
+                <p>
+                    Informasi kondisi seluruh sensor IoT
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- TABS -->
+        <section class="alert-tabs card">
+
+            <button
+                class="tab active"
+                data-status="all"
+            >
+                Semua
+                <b>24</b>
+            </button>
+
+            <button
+                class="tab"
+                data-status="pending"
+            >
+                Belum di tangani
+                <b>8</b>
+            </button>
+
+            <button
+                class="tab"
+                data-status="processing"
+            >
+                Diproses
+                <b>7</b>
+            </button>
+
+            <button
+                class="tab"
+                data-status="done"
+            >
+                Selesai
+                <b>9</b>
+            </button>
+
+        </section>
+
+
+        <!-- FILTER -->
+        <section class="filter-card card">
+
+            <div class="filter-field">
+
+                <label>Level</label>
+
+                <select id="levelFilter">
+                    <option value="all">Semua</option>
+                    <option value="Tinggi">Tinggi</option>
+                    <option value="Sedang">Sedang</option>
+                    <option value="Baterai">Baterai</option>
+                    <option value="Offline">Offline</option>
+                </select>
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label>Sensor</label>
+
+                <select id="sensorFilter">
+
+                    <option value="all">
+                        Semua Sensor
+                    </option>
+
+                    <option value="BNA-003">
+                        BNA-003
+                    </option>
+
+                    <option value="SMG-015">
+                        SMG-015
+                    </option>
+
+                    <option value="GRG-007">
+                        GRG-007
+                    </option>
+
+                    <option value="TMR-021">
+                        TMR-021
+                    </option>
+
+                    <option value="BRG-012">
+                        BRG-012
+                    </option>
+
+                    <option value="KDL-008">
+                        KDL-008
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label>Jenis</label>
+
+                <select id="typeFilter">
+
+                    <option value="all">
+                        Semua Jenis
+                    </option>
+
+                    <option value="Tinggi Air">
+                        Tinggi Air
+                    </option>
+
+                    <option value="Curah Hujan">
+                        Curah Hujan
+                    </option>
+
+                    <option value="Baterai">
+                        Baterai
+                    </option>
+
+                    <option value="Offline">
+                        Offline
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="date-filter"
+                id="dateFilter"
+            >
+                26 Juni 2026 - 26 Juni 2026.
+            </button>
+
+
+            <div></div>
+
+
+            <button
+                class="reset-btn"
+                id="resetFilter"
+            >
+                Reset Filter
+            </button>
+
+
+            <button
+                class="apply-btn"
+                id="applyFilter"
+            >
+                Terapkan
+            </button>
+
+        </section>
+
+
+        <!-- ALERT TABLE -->
+        <section class="alerts-card card">
+
+            <div class="table-head">
+
+                <h2>
+                    Daftar alert(
+                    <span id="resultCount">24</span>
+                    )
+                </h2>
+
+                <select id="rowsPerPage">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                </select>
+
+            </div>
+
+
+            <div class="table-scroll">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="check-col">
+                                <input
+                                    type="checkbox"
+                                    id="checkAll"
+                                >
+                            </th>
+
+                            <th>Level</th>
+
+                            <th>Judul Alert</th>
+
+                            <th>Sensor & Lokasi</th>
+
+                            <th>
+                                Nilai Pemicu/Ambang
+                            </th>
+
+                            <th>Waktu</th>
+
+                            <th>
+                                Status Tindak lanjut
+                            </th>
+
+                            <th>Petugas</th>
+
+                            <th>Aksi</th>
+
+                            <th></th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="alertBody"></tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="table-footer">
+
+                <span id="pageInfo">
+                    Menampilkan 1 - 10 dari 24 Alert
+                </span>
+
+                <div
+                    class="pagination"
+                    id="pagination"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTTOM -->
+        <section class="bottom-grid">
+
+            <article class="bottom-card empty-state card">
+
+                <div class="large-icon">
+                    ♧
+                </div>
+
+                <div>
+
+                    <strong>
+                        Tidak ada alert yang perlu ditangani
+                    </strong>
+
+                    <p>
+                        Semua notifikasi telah ditangani
+                        dengan baik.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-small"
+                    id="backDashboard"
+                >
+                    Kembali ke Dashboard
+                </button>
+
+            </article>
+
+
+            <article class="bottom-card new-alert card">
+
+                <div class="large-icon">
+                    ♧
+                </div>
+
+                <div>
+
+                    <strong>
+                        Alert Baru Masuk
+                    </strong>
+
+                    <p>
+                        Tinggi air mencapai 248 cm
+                        di Kali Banjir Kanal Barat<br>
+                        10:48
+                    </p>
+
+                </div>
+
+                <button class="dark-btn">
+                    Lihat Detail
+                </button>
+
+            </article>
+
+
+            <article class="bottom-card mini-pagination card">
+
+                <span>
+                    Menampilkan 1-10 dari 24 alert
+                </span>
+
+                <div class="pagination compact">
+
+                    <button>‹</button>
+                    <button class="current">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>4</button>
+                    <button>›</button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script src="js/script.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+</html>

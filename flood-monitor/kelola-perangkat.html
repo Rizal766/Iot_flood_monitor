@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Perangkat - IoT Flood Monitor</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body class="device-management-page">
+
+<!-- ================= TOPBAR ================= -->
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-icon">💧</div>
+        <div>
+            <h1>IoT Flood Monitor</h1>
+            <span>Early Warning System</span>
+        </div>
+    </div>
+
+    <div class="search-box">
+        <span>🔍</span>
+        <input
+            type="text"
+            id="globalSearch"
+            placeholder="Cari lokasi,sensor,atau nama daerah..."
+        >
+    </div>
+
+    <div class="top-info">
+
+        <div class="weather">
+            <span class="weather-icon">☁</span>
+            <div>
+                <b>28°C</b>
+                <span>Berawan</span>
+            </div>
+        </div>
+
+        <div class="city">
+            Kota Semarang
+        </div>
+
+        <div class="date-time">
+            <b id="clock">12:52</b>
+            <span>10 Sep 2026</span>
+        </div>
+
+        <div class="notification">🔔<i>3</i></div>
+
+        <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+    </div>
+</header>
+
+
+<!-- ================= LAYOUT ================= -->
+<div class="layout">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group open">
+    <button type="button" class="side-link side-toggle is-current" aria-expanded="true"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link active"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+
+        <div class="sidebar-banner">
+            <img
+                src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80"
+                alt="Flood"
+            >
+
+            <div class="banner-overlay">
+                <b>Bersama Teknologi,<br>
+                    Kita Lebih Siap<br>
+                    Menghadapi Banjir</b>
+
+                <small>〰 IoT for a Safer Tomorrow</small>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="main-content">
+
+        <!-- ================= CONTENT ================= -->
+        <div class="content-grid">
+
+            <!-- LEFT -->
+            <section class="left-content">
+
+                <section class="page-header">
+                    <div>
+                        <h2>
+                            <span class="page-title-icon">▤</span>
+                            Kelola Perangkat
+                        </h2>
+                        <p>
+                            Kelola dan konfigurasi sensor, gateway, dan perangkat IoT
+                            di seluruh lokasi.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- STATISTICS -->
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">▣</div>
+                        <div>
+                            <span>Total Perangkat</span>
+                            <strong>24</strong>
+                            <small class="positive">↑ 2 perangkat baru</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon gray">◉</div>
+                        <div>
+                            <span>Online</span>
+                            <strong>18</strong>
+                            <small class="positive">↑ 75% dari total</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon gray">⌁</div>
+                        <div>
+                            <span>Offline</span>
+                            <strong>4</strong>
+                            <small class="positive">↑ 17% dari total</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon gray">🛠</div>
+                        <div>
+                            <span>Maintenance</span>
+                            <strong>2</strong>
+                            <small class="positive">↑ 8% dari total</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- DEVICE TABLE -->
+                <section class="device-card">
+
+                    <div class="filter-bar">
+
+                        <div class="table-search">
+                            <span>🔍</span>
+                            <input
+                                type="text"
+                                id="deviceSearch"
+                                placeholder="Cari ID sensor,nama lokasi atau sinyal"
+                            >
+                        </div>
+
+                        <select id="statusFilter">
+                            <option value="all">Status<br>Semua</option>
+                            <option value="Online">Online</option>
+                            <option value="Offline">Offline</option>
+                            <option value="Maintenance">Maintenance</option>
+                        </select>
+
+                        <select id="typeFilter">
+                            <option value="all">Jenis Perangkat<br>Semua</option>
+                            <option value="Water Level">Water Level</option>
+                            <option value="Rain Gauge">Rain Gauge</option>
+                        </select>
+
+                        <select id="locationFilter">
+                            <option value="all">Lokasi<br>Semua</option>
+                            <option value="Kali Banjir Kanal Barat">Kali Banjir Kanal Barat</option>
+                            <option value="Sungai Muktiharjo">Sungai Muktiharjo</option>
+                            <option value="Kali Garang">Kali Garang</option>
+                            <option value="Kali Timo">Kali Timo</option>
+                        </select>
+
+                        <button class="date-filter">
+                            26 Jun 2026 - 20 Jul 2026
+                        </button>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAllDevices" aria-label="Pilih semua perangkat di halaman ini">
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Nama Lokasi</th>
+                                    <th>Jenis</th>
+                                    <th>GUID / Kit ID</th>
+                                    <th>Firmware</th>
+                                    <th>Status Koneksi</th>
+                                    <th>Terakhir Terhubung</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="deviceTable"></tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="table-footer">
+
+                        <span id="tableInfo">
+                            Menampilkan 1 - 10 dari 24 Perangkat
+                        </span>
+
+                        <span id="selectedCount" aria-live="polite">0 dipilih</span>
+
+                        <button class="delete-selected" id="deleteSelected" type="button" disabled>
+                            Hapus Dipilih
+                        </button>
+
+                        <div class="pagination">
+                            <button>‹</button>
+                            <button class="active">1</button>
+                            <button>2</button>
+                            <button>3</button>
+                            <button>4</button>
+                            <button>›</button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- BOTTOM PANELS -->
+                <div class="bottom-grid">
+
+                    <!-- CONNECTION SUCCESS -->
+                    <section class="bottom-card">
+
+                        <h3>Uji Koneksi</h3>
+
+                        <div class="success-box">
+                            <strong>Koneksi berhasil</strong>
+                            <span>Perangkat dapat mengirimkan data</span>
+                        </div>
+
+                        <div class="mini-info">
+                            <p><span>Host</span> mqtt.example.com</p>
+                            <p><span>Virtual Host</span> flood</p>
+                            <p><span>Queue</span> sensor-data</p>
+                            <p><span>GUID / Kit ID</span> GK-001-7789</p>
+                        </div>
+
+                        <div class="bottom-actions">
+                            <button>Tutup</button>
+                            <button class="primary">Uji Koneksi Lagi</button>
+                        </div>
+
+                    </section>
+
+
+                    <!-- CONNECTION FAILED -->
+                    <section class="bottom-card">
+
+                        <h3>Uji Koneksi Gagal</h3>
+
+                        <div class="error-box">
+                            <strong>Koneksi gagal!</strong>
+                            <span>Periksa kembali pengaturan koneksi perangkat.</span>
+                            <small>Pesan error: Host tidak dapat dijangkau.</small>
+                        </div>
+
+                        <div class="mini-info">
+                            <p><span>Host</span> mqtt.example.com</p>
+                            <p><span>Virtual Host</span> flood</p>
+                            <p><span>Queue</span> flood</p>
+                            <p><span>GUID / Kit ID</span> GK-001-7789</p>
+                        </div>
+
+                        <button class="bottom-close">Tutup</button>
+
+                    </section>
+
+
+                    <!-- QR -->
+                    <section class="bottom-card qr-card">
+
+                        <h3>Panel QR Pairing</h3>
+                        <p>Scan QR di aplikasi mobile untuk melakukan pairing perangkat.</p>
+
+                        <div class="qr-content">
+
+                            <div class="qr-code">
+                                <span>QR</span>
+                            </div>
+
+                            <div>
+                                <small>ID Perangkat: <b>DEV-000</b></small>
+                                <small>Berlaku hingga 24 Jun 2026</small>
+                                <small>17:24</small>
+                            </div>
+
+                        </div>
+
+                        <div class="qr-actions">
+                            <button>Unduh PDF</button>
+                            <button>Batal</button>
+                            <button>Buat Ulang</button>
+                        </div>
+
+                        <div class="qr-warning">
+                            QR akan kedaluwarsa dalam 30 hari.
+                        </div>
+
+                    </section>
+
+
+                    <!-- DELETE -->
+                    <section class="bottom-card">
+
+                        <h3>Panel Hapus Perangkat</h3>
+
+                        <div class="delete-content">
+                            <strong>
+                                Apakah Anda yakin ingin menghapus perangkat ini?
+                            </strong>
+
+                            <span>
+                                Perangkat DEV-003 (Kali Garang) akan
+                                dihapus secara permanen dari sistem.
+                            </span>
+                        </div>
+
+                        <div class="bottom-actions">
+                            <button>Batal</button>
+                            <button class="danger">Hapus</button>
+                        </div>
+
+                    </section>
+
+
+                    <!-- EDIT -->
+                    <section class="bottom-card">
+
+                        <h3>Edit Perangkat</h3>
+
+                        <div class="edit-box">
+                            <strong>Perangkat berhasil disimpan.</strong>
+                            <span>Konfigurasi perangkat telah diperbarui.</span>
+                        </div>
+
+                        <button class="detail-button">
+                            Lihat Detail
+                        </button>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RIGHT PANEL ================= -->
+            <aside class="right-panel">
+
+                <div class="add-device">
+
+                    <h3>Tambah Perangkat Baru</h3>
+
+                    <div class="steps">
+                        <span class="active">1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                    </div>
+
+
+                    <div class="form-step">
+
+                        <h4>1. Info Lokasi</h4>
+
+                        <p>
+                            Isi informasi lokasi dan pilih koordinat di peta.
+                        </p>
+
+                        <label>ID Perangkat *</label>
+                        <input placeholder="Contoh: DEV-009">
+
+                        <label>Nama Lokasi *</label>
+                        <input placeholder="Contoh: Kali Banjir Kanal Barat">
+
+                        <div class="two-column">
+
+                            <div>
+                                <label>Sungai *</label>
+                                <select>
+                                    <option>Pilih sungai</option>
+                                    <option>Kali Garang</option>
+                                    <option>Kali Timo</option>
+                                    <option>Kali Bringin</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Kecamatan *</label>
+                                <select>
+                                    <option>Pilih kecamatan</option>
+                                    <option>Semarang Barat</option>
+                                    <option>Semarang Timur</option>
+                                    <option>Semarang Selatan</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                        <label>Lokasi di Peta</label>
+
+                        <div class="location-map">
+
+                            <img
+                                src="https://tile.openstreetmap.org/12/3374/2047.png"
+                                alt="Map"
+                            >
+
+                            <button>Pilih di Peta</button>
+
+                        </div>
+
+
+                        <label>Foto Lokasi</label>
+
+                        <div class="photo-upload">
+                            <span>▧</span>
+                            <p>Klik untuk unggah foto atau seret file</p>
+                            <small>Format: JPG, PNG (maks. 5MB)</small>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button>Batal</button>
+                            <button class="primary">Lanjut →</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUCCESS -->
+                <div class="success-device">
+                    <strong>Perangkat berhasil ditambahkan!</strong>
+                    <span>Sensor DEV-009 telah terdaftar di sistem.</span>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<dialog class="sensor-edit-dialog" id="deviceEditDialog">
+    <form id="deviceEditForm">
+        <div class="sensor-edit-heading">
+            <div>
+                <h2>Edit Perangkat</h2>
+                <p id="deviceEditId"></p>
+            </div>
+            <button type="button" class="sensor-edit-close" id="closeDeviceEdit" aria-label="Tutup">&times;</button>
+        </div>
+        <label>
+            Nama lokasi
+            <input id="deviceEditLocation" required>
+        </label>
+        <div class="sensor-edit-actions">
+            <button type="button" id="cancelDeviceEdit">Batal</button>
+            <button type="submit">Simpan perubahan</button>
+        </div>
+    </form>
+</dialog>
+
+<div id="toast"></div>
+
+<script src="js/kelola-perangkat.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+</html>

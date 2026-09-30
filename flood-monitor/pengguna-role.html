@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengguna & Role - IoT Flood Monitor</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body data-page="pengguna-role">
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-logo">
+            <i class="fa-solid fa-droplet"></i>
+        </div>
+
+        <div>
+            <h1>IoT Flood Monitor</h1>
+            <span>Early Warning System</span>
+        </div>
+    </div>
+
+    <div class="global-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+            type="text"
+            id="globalSearch"
+            placeholder="Cari lokasi,sensor,atau nama daerah..."
+        >
+    </div>
+
+    <div class="top-info">
+
+        <div class="weather">
+            <i class="fa-solid fa-cloud"></i>
+            <div>
+                <strong>28°C</strong>
+                <span>Berawan</span>
+            </div>
+        </div>
+
+        <div class="city">
+            <strong>Kota Semarang</strong>
+        </div>
+
+        <div class="date">
+            <span>12:52</span>
+            <small>10 Sep 2026</small>
+        </div>
+
+        <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+    </div>
+</header>
+
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group open">
+    <button type="button" class="side-link side-toggle is-current" aria-expanded="true"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link active"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+
+        <!-- PROMO -->
+        <div class="sidebar-promo">
+            <div class="promo-image"></div>
+
+            <div class="promo-text">
+                <strong>
+                    Bersama Teknologi,<br>
+                    Kita Lebih Siap<br>
+                    Menghadapi Banjir
+                </strong>
+
+                <small>
+                    ≋ IoT for a Safer Tomorrow
+                </small>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <div class="page-title">
+
+            <div class="title-icon">
+                <i class="fa-regular fa-address-card"></i>
+            </div>
+
+            <div>
+                <h2>Pengguna & Role</h2>
+                <p>
+                    Kelola Pengguna, Hak Akses Dan Warga terdaftar
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- TABS -->
+        <div class="page-tabs">
+            <button class="tab active">Pengguna</button>
+            <button class="tab">Hak Akses Per Role</button>
+            <button class="tab">Warga Terdaftar</button>
+        </div>
+
+
+        <!-- STATISTICS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon user">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                <div>
+                    <small>Total Pengguna</small>
+                    <strong>12</strong>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon admin">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+
+                <div>
+                    <small>Admin</small>
+                    <strong>1</strong>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon operator">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <div>
+                    <small>Operator</small>
+                    <strong>7</strong>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon field">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                <div>
+                    <small>Petugas Lapangan</small>
+                    <strong>4</strong>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- CONTENT GRID -->
+        <section class="content-grid">
+
+            <!-- LEFT -->
+            <div class="left-area">
+
+                <!-- FILTER -->
+                <div class="filter-bar">
+
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input
+                            type="text"
+                            id="userSearch"
+                            placeholder="Cari nama atau email..."
+                        >
+                    </div>
+
+                    <select id="roleFilter">
+                        <option value="all">Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Operator">Operator</option>
+                        <option value="Petugas Lapangan">
+                            Petugas Lapangan
+                        </option>
+                    </select>
+
+                    <select id="statusFilter">
+                        <option value="all">Status</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Nonaktif">Nonaktif</option>
+                    </select>
+
+                    <button class="reset-button" id="resetFilter">
+                        Reset Filter
+                    </button>
+
+                </div>
+
+
+                <!-- USER TABLE -->
+                <div class="table-card">
+
+                    <div class="table-wrapper">
+
+                        <table id="userTable">
+
+                            <thead>
+                                <tr>
+                                    <th width="35"></th>
+                                    <th>Nama</th>
+                                    <th>Email/Nomor HP</th>
+                                    <th>Role</th>
+                                    <th>Wilayah Tugas</th>
+                                    <th>Status</th>
+                                    <th>Terakhir Login</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr data-role="Admin" data-status="Aktif">
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="avatar">RF</div>
+                                            <span>Rizal & Fadlan</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        rizal123@gmail.com<br>
+                                        +62 834 5678 990
+                                    </td>
+
+                                    <td>
+                                        <span class="role admin-role">
+                                            Admin
+                                        </span>
+                                    </td>
+
+                                    <td>Semua Wilayah</td>
+
+                                    <td>
+                                        <span class="status active">
+                                            Aktif
+                                        </span>
+                                    </td>
+
+                                    <td>26 Jun 2026</td>
+
+                                    <td class="actions">
+                                        <button class="icon-btn edit-btn">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="icon-btn more-btn">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                <tr data-role="Operator" data-status="Aktif">
+                                    <td><input type="checkbox"></td>
+
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="avatar">SA</div>
+                                            <span>Siti Aminah</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        siti@bpbpd.go.id<br>
+                                        +62 812 3456 1122
+                                    </td>
+
+                                    <td>
+                                        <span class="role operator-role">
+                                            Operator
+                                        </span>
+                                    </td>
+
+                                    <td>Kota Semarang</td>
+
+                                    <td>
+                                        <span class="status active">
+                                            Aktif
+                                        </span>
+                                    </td>
+
+                                    <td>26 Jun 2026</td>
+
+                                    <td class="actions">
+                                        <button class="icon-btn edit-btn">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="icon-btn more-btn">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                <tr data-role="Petugas Lapangan" data-status="Aktif">
+                                    <td><input type="checkbox"></td>
+
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="avatar">BS</div>
+                                            <span>Budi Santoso</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        budi@lapangan.go.id<br>
+                                        +62 857 1234 5678
+                                    </td>
+
+                                    <td>
+                                        <span class="role field-role">
+                                            Petugas<br>Lapangan
+                                        </span>
+                                    </td>
+
+                                    <td>Kali Garang</td>
+
+                                    <td>
+                                        <span class="status active">
+                                            Aktif
+                                        </span>
+                                    </td>
+
+                                    <td>26 Jun 2026</td>
+
+                                    <td class="actions">
+                                        <button class="icon-btn edit-btn">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="icon-btn more-btn">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                <tr data-role="Operator" data-status="Aktif">
+                                    <td><input type="checkbox"></td>
+
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="avatar">RL</div>
+                                            <span>Rina Lestari</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        rina@bpbd.go.id<br>
+                                        +62 813 9999 8877
+                                    </td>
+
+                                    <td>
+                                        <span class="role operator-role">
+                                            Operator
+                                        </span>
+                                    </td>
+
+                                    <td>Kali Timo</td>
+
+                                    <td>
+                                        <span class="status active">
+                                            Aktif
+                                        </span>
+                                    </td>
+
+                                    <td>26 Jun 2026</td>
+
+                                    <td class="actions">
+                                        <button class="icon-btn edit-btn">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="icon-btn more-btn">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                <tr data-role="Petugas Lapangan" data-status="Aktif">
+                                    <td><input type="checkbox"></td>
+
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="avatar">AF</div>
+                                            <span>Ahmad Fauzi</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        ahmad@lapangan.go.id<br>
+                                        +62 856 1111 2222
+                                    </td>
+
+                                    <td>
+                                        <span class="role field-role">
+                                            Petugas<br>Lapangan
+                                        </span>
+                                    </td>
+
+                                    <td>Semarang Timur</td>
+
+                                    <td>
+                                        <span class="status active">
+                                            Aktif
+                                        </span>
+                                    </td>
+
+                                    <td>26 Jun 2026</td>
+
+                                    <td class="actions">
+                                        <button class="icon-btn edit-btn">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="icon-btn more-btn">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+
+                                <tr data-role="Operator" data-status="Aktif">
+                                    <td><input type="checkbox"></td>
+
+                                    <td>
+                                        <div class="user-name">
+                                            <div class="avatar">DL</div>
+                                            <span>Dewi Maharani</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        dewi@operator.go.id<br>
+                                        +62 812 7777 6666
+                                    </td>
+
+                                    <td>
+                                        <span class="role operator-role">
+                                            Operator
+                                        </span>
+                                    </td>
+
+                                    <td>Kali Banjir</td>
+
+                                    <td>
+                                        <span class="status active">
+                                            Aktif
+                                        </span>
+                                    </td>
+
+                                    <td>26 Jun 2026</td>
+
+                                    <td class="actions">
+                                        <button class="icon-btn edit-btn">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="icon-btn more-btn">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="table-footer">
+                        <span>Menampilkan 1 - 6 dari 12 Pengguna</span>
+
+                        <div class="pagination">
+                            <button>‹</button>
+                            <button class="active">1</button>
+                            <button>2</button>
+                            <button>›</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- BOTTOM CARDS -->
+                <div class="bottom-grid">
+
+                    <div class="bottom-card">
+
+                        <h3>Hak Akses per Role</h3>
+
+                        <table class="permission-table">
+                            <thead>
+                                <tr>
+                                    <th>Fitur</th>
+                                    <th>Admin</th>
+                                    <th>Operator</th>
+                                    <th>Petugas Lapangan</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Dashboard & Peta</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Data Sensor</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Pengaturan</td>
+                                    <td>✓</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Laporan</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                    <td>-</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Pengguna & Role</td>
+                                    <td>✓</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Notifikasi & Kontak Darurat</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+                    <div class="bottom-card">
+
+                        <h3>Warga Terdaftar</h3>
+
+                        <table class="citizen-table">
+                            <thead>
+                                <tr>
+                                    <th>Wilayah</th>
+                                    <th>Jumlah Warga</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Semarang</td>
+                                    <td>2.345</td>
+                                    <td><span class="status active">Aktif</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Kali Garang</td>
+                                    <td>682</td>
+                                    <td><span class="status active">Aktif</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Kali Timo</td>
+                                    <td>573</td>
+                                    <td><span class="status active">Aktif</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Semarang Timur</td>
+                                    <td>421</td>
+                                    <td><span class="status active">Aktif</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Kali Banjir Kanal Barat</td>
+                                    <td>398</td>
+                                    <td><span class="status active">Aktif</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT PANEL -->
+            <aside class="right-panel">
+
+                <div class="form-card">
+
+                    <h3>Form Tambah Pengguna</h3>
+
+                    <label>Nama Lengkap</label>
+                    <input id="newName" type="text"
+                           placeholder="Masukkan nama lengkap">
+
+                    <label>Email / No. HP</label>
+                    <input id="newContact" type="text"
+                           placeholder="contoh: nama@domain.com atau 08xxxxxxxxxx">
+
+                    <label>Role</label>
+                    <select id="newRole">
+                        <option>Pilih role</option>
+                        <option>Admin</option>
+                        <option>Operator</option>
+                        <option>Petugas Lapangan</option>
+                    </select>
+
+                    <label>Wilayah Tugas</label>
+                    <select id="newArea">
+                        <option>Pilih wilayah</option>
+                        <option>Semua Wilayah</option>
+                        <option>Kota Semarang</option>
+                        <option>Kali Garang</option>
+                        <option>Kali Timo</option>
+                        <option>Semarang Timur</option>
+                        <option>Kali Banjir</option>
+                    </select>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="sendInvitation">
+                        Kirim undangan setelah disimpan
+                    </label>
+
+                    <div class="form-buttons">
+                        <button class="cancel-btn" id="cancelUser">
+                            Batal
+                        </button>
+
+                        <button class="primary-btn" id="sendInvite">
+                            Kirim Undangan
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="form-card invitation-card">
+
+                    <h3>Undangan Terkirim</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email / No. HP</th>
+                                <th>Role</th>
+                                <th>Dikirim</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>agus@domain.com</td>
+                                <td>Operator</td>
+                                <td>26 Jun 2026</td>
+                                <td>Terkirim</td>
+                            </tr>
+
+                            <tr>
+                                <td>sari@domain.com</td>
+                                <td>Petugas lapangan</td>
+                                <td>26 Jun 2026</td>
+                                <td>Kadaluarsa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+                <div class="toast success-toast">
+                    <i class="fa-solid fa-check"></i>
+
+                    <div>
+                        <strong>Undangan terkirim</strong>
+                        <span>Undangan untuk agus@domain.com telah terkirim.</span>
+                    </div>
+                </div>
+
+
+                <div class="toast warning-toast">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <div>
+                        <strong>Undangan kadaluarsa</strong>
+                        <span>Undangan untuk rina@domain.com telah kadaluarsa.</span>
+                    </div>
+
+                    <button>Kirim Ulang</button>
+                </div>
+
+
+                <div class="toast danger-toast">
+                    <i class="fa-solid fa-circle-xmark"></i>
+
+                    <div>
+                        <strong>Nonaktifkan Pengguna</strong>
+                        <span>
+                            Apakah Anda yakin ingin menonaktifkan pengguna
+                            Budi Santoso?
+                        </span>
+                    </div>
+
+                    <div class="danger-actions">
+                        <button>Batal</button>
+                        <button>Nonaktifkan</button>
+                    </div>
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div id="toastMessage" class="system-toast"></div>
+
+<script src="js/script.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - IoT Flood Monitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/auth.js"></script>
+</head>
+<body>
+<main class="wrap">
+    <svg class="logo" viewBox="0 0 34 42" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd0f7"/><stop offset="1" stop-color="#2b7ce0"/></linearGradient></defs>
+        <path d="M17 1C17 1 3 17 3 27a14 14 0 0 0 28 0C31 17 17 1 17 1Z" fill="url(#g)"/>
+        <path d="M10 27a7 7 0 0 0 5 6.7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/>
+    </svg>
+
+    <form class="card" id="loginForm" novalidate>
+        <h1>IoT Flood Monitor</h1>
+        <div class="tag">Early Warning System</div>
+
+        <div class="error" id="error" role="alert"></div>
+
+        <div class="field">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="m3 6.5 9 7 9-7"/></svg>
+            <input id="identity" placeholder="Email / No.Telepon" autocomplete="username" aria-label="Email atau nomor telepon" autofocus>
+        </div>
+
+        <div class="field">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="10.5" width="14" height="10" rx="1.8"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/><circle cx="12" cy="15.5" r="1.1" fill="currentColor"/></svg>
+            <input id="password" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password">
+            <button type="button" class="eye" id="eye" aria-label="Tampilkan password">
+                <svg class="show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></svg>
+            </button>
+        </div>
+
+        <button class="submit" id="submitBtn" type="submit">Login</button>
+        <button class="forgot" id="forgot" type="button">Lupa Password?</button>
+        <div class="notice" id="notice">Untuk reset password, hubungi administrator sistem.</div>
+    </form>
+
+    <div class="demo" id="demo">
+        Akun demo:
+        <button type="button" data-u="admin@floodmonitor.id" data-p="admin123">Administrator</button>
+        <button type="button" data-u="operator@floodmonitor.id" data-p="operator123">Operator</button>
+        <button type="button" data-u="petugas@floodmonitor.id" data-p="petugas123">Petugas</button>
+    </div>
+</main>
+
+<script>
+    var $ = function (id) { return document.getElementById(id); };
+    var idEl = $("identity"), pw = $("password"), err = $("error"), btn = $("submitBtn");
+
+    $("eye").addEventListener("click", function () {
+        var show = pw.type === "password";
+        pw.type = show ? "text" : "password";
+        this.classList.toggle("on", show);
+        this.setAttribute("aria-label", show ? "Sembunyikan password" : "Tampilkan password");
+    });
+    $("forgot").addEventListener("click", function () { $("notice").classList.toggle("show"); });
+    $("demo").addEventListener("click", function (e) {
+        var b = e.target.closest("button"); if (!b) return;
+        idEl.value = b.dataset.u; pw.value = b.dataset.p; err.classList.remove("show"); btn.focus();
+    });
+    $("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!idEl.value.trim() || !pw.value) { err.textContent = "Email/No. Telepon dan password wajib diisi."; err.classList.add("show"); return; }
+        btn.disabled = true; btn.textContent = "Memeriksa...";
+        Auth.login(idEl.value, pw.value).then(function (s) {
+            if (s) { location.replace("dashboard.html"); return; }
+            err.textContent = "Email/No. Telepon atau password salah."; err.classList.add("show");
+            btn.disabled = false; btn.textContent = "Login"; pw.select();
+        });
+    });
+</script>
+</body>
+</html>

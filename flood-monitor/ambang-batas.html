@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ambang Batas & Aturan Alert - IoT Flood Monitor</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body class="threshold-page">
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-water">💧</div>
+
+        <div>
+            <h1>IoT Flood Monitor</h1>
+            <span>Early Warning System</span>
+        </div>
+    </div>
+
+
+    <div class="global-search">
+        <span>🔍</span>
+
+        <input
+            type="text"
+            id="globalSearch"
+            placeholder="Cari lokasi,sensor,atau nama daerah..."
+        >
+    </div>
+
+
+    <div class="top-right">
+
+        <div class="weather">
+            <div class="weather-symbol">☁</div>
+
+            <div>
+                <strong>28°C</strong>
+                <span>Berawan</span>
+            </div>
+        </div>
+
+
+        <div class="city">
+            Kota Semarang
+        </div>
+
+
+        <div class="datetime">
+            <strong id="clock">12:52</strong>
+            <span>10 Sep 2026</span>
+        </div>
+
+
+        <div class="notification-icon">
+            🔔
+            <b>3</b>
+        </div>
+
+
+        <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN LAYOUT
+===================================================== -->
+
+<div class="layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group open">
+    <button type="button" class="side-link side-toggle is-current" aria-expanded="true"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link active"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+
+
+        <!-- SIDEBAR BANNER -->
+
+        <div class="sidebar-banner">
+
+            <img
+                src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=500&q=80"
+                alt="Banjir"
+            >
+
+            <div class="banner-content">
+
+                <strong>
+                    Bersama Teknologi,<br>
+                    Kita Lebih Siap<br>
+                    Menghadapi Banjir
+                </strong>
+
+                <small>
+                    〰 IoT for a Safer Tomorrow
+                </small>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="page-header">
+
+            <div class="page-heading">
+
+                <span class="heading-icon">▤</span>
+
+                <div>
+
+                    <h2>
+                        Pengaturan Ambang Batas & Aturan Alert
+                    </h2>
+
+                    <p>
+                        Tentukan kapan sensor dianggap Waspada,
+                        Siaga, atau Bahaya, dan siapa yang diberi tahu
+                        lewat saluran apa.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CONTENT -->
+
+        <div class="settings-layout">
+
+
+            <!-- =================================================
+                 CENTER CONFIGURATION
+            ================================================== -->
+
+            <section class="configuration">
+
+
+                <!-- TABS -->
+
+                <div class="tabs">
+
+                    <button
+                        class="tab active"
+                        data-tab="threshold"
+                    >
+                        Ambang Batas
+                    </button>
+
+                    <button
+                        class="tab"
+                        data-tab="alert"
+                    >
+                        Aturan Alert
+                    </button>
+
+                </div>
+
+
+
+                <!-- SENSOR SELECT -->
+
+                <section class="selection-card">
+
+                    <div class="field">
+
+                        <label>
+                            Pilih Sensor / Lokasi
+                        </label>
+
+                        <select id="sensorSelect">
+
+                            <option value="DEV-001">
+                                Sungai Muktiharjo (DEV-001)
+                            </option>
+
+                            <option value="DEV-002">
+                                Kali Garang (DEV-002)
+                            </option>
+
+                            <option value="DEV-003">
+                                Kali Banjir Kanal Barat (DEV-003)
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Template Ambang
+                        </label>
+
+                        <select id="templateSelect">
+
+                            <option>
+                                Sungai Besar (Default)
+                            </option>
+
+                            <option>
+                                Sungai Sedang
+                            </option>
+
+                            <option>
+                                Sungai Kecil
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        class="template-button"
+                        id="applyTemplate"
+                    >
+                        Terapkan Template ke Banyak Sensor
+                    </button>
+
+                </section>
+
+
+
+                <!-- THRESHOLD -->
+
+                <section class="threshold-card">
+
+                    <div class="threshold-inputs">
+
+                        <h3>
+                            Ambang Batas Tinggi Air (cm)
+                        </h3>
+
+
+                        <!-- WASPADA -->
+
+                        <div class="threshold-row">
+
+                            <span class="status-dot yellow"></span>
+
+                            <strong class="yellow-text">
+                                Waspada
+                            </strong>
+
+                            <input
+                                id="waspadaInput"
+                                type="number"
+                                value="100"
+                            >
+
+                            <span>cm</span>
+
+                        </div>
+
+
+                        <!-- SIAGA -->
+
+                        <div class="threshold-row">
+
+                            <span class="status-dot orange"></span>
+
+                            <strong class="orange-text">
+                                Siaga
+                            </strong>
+
+                            <input
+                                id="siagaInput"
+                                type="number"
+                                value="150"
+                            >
+
+                            <span>cm</span>
+
+                        </div>
+
+
+                        <!-- BAHAYA -->
+
+                        <div class="threshold-row">
+
+                            <span class="status-dot red"></span>
+
+                            <strong class="red-text">
+                                Bahaya
+                            </strong>
+
+                            <input
+                                id="bahayaInput"
+                                type="number"
+                                value="200"
+                            >
+
+                            <span>cm</span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SCALE PREVIEW -->
+
+                    <div class="scale-preview">
+
+                        <h3>
+                            Pratinjau Skala
+                        </h3>
+
+
+                        <div class="scale-container">
+
+                            <div class="scale-axis">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="water-scale">
+
+                                <div class="danger"></div>
+
+                                <div class="warning"></div>
+
+                                <div class="caution"></div>
+
+                                <div class="normal"></div>
+
+                            </div>
+
+
+                            <div class="arrows">
+
+                                <span>➜</span>
+                                <span>➜</span>
+                                <span>➜</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ADDITIONAL RULE -->
+
+                <section class="additional-card">
+
+                    <h3>
+                        Aturan Tambahan
+                    </h3>
+
+
+                    <div class="additional-grid">
+
+
+                        <div class="additional-item">
+
+                            <label>
+                                Curah Hujan
+                            </label>
+
+                            <span>
+                                Peringatan dimulai jika intensitas
+                                mencapai lebih dari
+                            </span>
+
+                            <div class="input-with-unit">
+
+                                <input
+                                    id="rainInput"
+                                    type="number"
+                                    value="50"
+                                >
+
+                                <small>
+                                    mm/jam
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="additional-item">
+
+                            <label>
+                                Sensor Offline
+                            </label>
+
+                            <span>
+                                Dianggap offline setelah
+                            </span>
+
+                            <div class="input-with-unit">
+
+                                <input
+                                    id="offlineInput"
+                                    type="number"
+                                    value="30"
+                                >
+
+                                <small>
+                                    menit
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="additional-item">
+
+                            <label>
+                                Baterai Lemah
+                            </label>
+
+                            <span>
+                                Peringatan jika baterai di bawah
+                            </span>
+
+                            <div class="input-with-unit">
+
+                                <input
+                                    id="batteryInput"
+                                    type="number"
+                                    value="20"
+                                >
+
+                                <small>%</small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ALERT RULE -->
+
+                <section class="alert-rule-card">
+
+                    <div class="role-title">
+                        <span>Level Alert</span>
+
+                        <span>
+                            Role / Grup
+                        </span>
+
+                        <span>
+                            Saluran Notifikasi
+                        </span>
+                    </div>
+
+
+                    <div class="column-head">
+
+                        <span></span>
+
+                        <div>
+                            <span>Admin</span>
+                            <span>Operator</span>
+                            <span>Petugas Lapangan</span>
+                            <span>BPBD</span>
+                        </div>
+
+                        <div>
+                            <span>Push</span>
+                            <span>SMS</span>
+                            <span>WhatsApp</span>
+                            <span>Email</span>
+                            <span>Sirene</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- WASPADA -->
+
+                    <div class="rule-row">
+
+                        <div class="rule-name">
+                            <span class="status-dot yellow"></span>
+                            <strong>Waspada</strong>
+                        </div>
+
+
+                        <div class="toggle-group">
+
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle off"></button>
+
+                        </div>
+
+
+                        <div class="toggle-group">
+
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle off"></button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SIAGA -->
+
+                    <div class="rule-row">
+
+                        <div class="rule-name">
+                            <span class="status-dot orange"></span>
+                            <strong>Siaga</strong>
+                        </div>
+
+
+                        <div class="toggle-group">
+
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+
+                        </div>
+
+
+                        <div class="toggle-group">
+
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle off"></button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- BAHAYA -->
+
+                    <div class="rule-row">
+
+                        <div class="rule-name">
+                            <span class="status-dot red"></span>
+                            <strong>Bahaya</strong>
+                        </div>
+
+
+                        <div class="toggle-group">
+
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+
+                        </div>
+
+
+                        <div class="toggle-group">
+
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle on"></button>
+                            <button class="toggle off"></button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- SAVE -->
+
+                <div class="save-bar">
+
+                    <button
+                        class="save-button"
+                        id="saveButton"
+                    >
+                        Simpan Perubahan
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        id="resetButton"
+                    >
+                        Terapkan Template
+                    </button>
+
+                    <span class="saved-info">
+                        Terakhir disimpan:
+                        26 Jun 2026, 09:32 oleh Fahmi Nuraflah
+                    </span>
+
+                    <button
+                        class="secondary-button"
+                        id="bulkButton"
+                    >
+                        Terapkan Template ke Banyak Sensor
+                    </button>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDEBAR
+            ================================================== -->
+
+            <aside class="right-settings">
+
+
+                <!-- VALIDATION -->
+
+                <section class="validation-card">
+
+                    <div class="warning-icon">
+                        !
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Validasi Data
+                        </strong>
+
+                        <p>
+                            Nilai Siaga harus lebih besar dari Waspada.
+                        </p>
+
+                        <p>
+                            Nilai Bahaya harus lebih besar dari Siaga.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- SUMMARY -->
+
+                <section class="summary-card">
+
+                    <h3>
+                        Ringkasan Konfigurasi
+                    </h3>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Sensor / Lokasi
+                        </span>
+
+                        <strong id="summarySensor">
+                            Sungai Muktiharjo (DEV-001)
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Template Ambang
+                        </span>
+
+                        <strong id="summaryTemplate">
+                            Sungai Besar (Default)
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Tinggi Air (cm)
+                        </span>
+
+                        <strong>
+                            Waspada:
+                            <b id="summaryWaspada">100</b>
+                            &nbsp;&nbsp;
+
+                            Siaga:
+                            <b id="summarySiaga">150</b>
+                            &nbsp;&nbsp;
+
+                            Bahaya:
+                            <b id="summaryBahaya">200</b>
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Curah Hujan
+                        </span>
+
+                        <strong>
+                            <b id="summaryRain">50</b> mm/jam
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Sensor Offline
+                        </span>
+
+                        <strong>
+                            <b id="summaryOffline">30</b> menit
+                        </strong>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Baterai Lemah
+                        </span>
+
+                        <strong>
+                            <b id="summaryBattery">20</b> %
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- NOTIFICATION PREVIEW -->
+
+                <section class="preview-card">
+
+                    <h3>
+                        Preview Notifikasi
+                    </h3>
+
+
+                    <div class="notification-preview">
+
+                        <div class="preview-alert-icon">
+                            !
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Alert Bahaya - Tinggi Air
+                            </strong>
+
+                            <p>
+                                Tinggi air mencapai 205 cm
+                                di Sungai Muktiharjo
+                                (Kali Timo).
+                            </p>
+
+                            <small>
+                                26 Jun 2026, 09:45
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <h4>
+                        Penerima
+                    </h4>
+
+
+                    <div class="recipient-list">
+
+                        <button>Admin</button>
+                        <button>Operator</button>
+                        <button>BPBD</button>
+
+                    </div>
+
+
+                    <h4>
+                        Saluran
+                    </h4>
+
+
+                    <div class="channel-list">
+
+                        <span>Push</span>
+                        <span>SMS</span>
+                        <span>WhatsApp</span>
+                        <span>Email</span>
+                        <span>Sirene</span>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- SUCCESS TOAST -->
+
+                <section
+                    class="success-message"
+                    id="successMessage"
+                >
+
+                    <button id="closeSuccess">
+                        ×
+                    </button>
+
+                    <div class="success-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Pengaturan berhasil di simpan
+                        </strong>
+
+                        <p>
+                            Ambang batas dan aturan alert
+                            telah di perbarui
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="js/script.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+</html>

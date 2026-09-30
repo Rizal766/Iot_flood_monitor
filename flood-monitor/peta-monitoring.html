@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Peta Monitoring - IoT Flood Monitor</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <div class="brand-logo">💧</div>
+
+        <div class="brand-text">
+            <h1>IoT Flood Monitor</h1>
+            <span>Early Warning System</span>
+        </div>
+    </div>
+
+    <div class="search-box">
+        <span>🔍</span>
+        <input
+            id="globalSearch"
+            type="text"
+            placeholder="Cari lokasi, sensor, atau nama daerah..."
+        >
+    </div>
+
+    <div class="top-info">
+
+        <div class="top-weather">
+            <span class="weather-icon">☁</span>
+
+            <div>
+                <b>28°C</b>
+                <small>Berawan</small>
+            </div>
+        </div>
+
+        <div class="city-info">
+            <b>Kota Semarang</b>
+            <small>
+                12:52<br>
+                10 Sep 2026
+            </small>
+        </div>
+
+        <div class="fm-account" id="fmAccount"><span class="fm-avatar"></span><div class="fm-account-text"><b>Memuat...</b><small></small></div><span class="fm-caret">⌄</span></div>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <nav class="side-nav" aria-label="Menu utama">
+  <a href="dashboard.html" class="side-link"><span class="side-icon">⌂</span><span class="side-text">Dashboard</span></a>
+  <a href="peta-monitoring.html" class="side-link active"><span class="side-icon">◈</span><span class="side-text">Peta Monitoring</span></a>
+  <a href="data-sensor.html" class="side-link"><span class="side-icon">◉</span><span class="side-text">Data sensor</span></a>
+  <a href="riwayat-data.html" class="side-link"><span class="side-icon">◷</span><span class="side-text">Riwayat Data</span></a>
+  <a href="notifikasi-alert.html" class="side-link"><span class="side-icon">♧</span><span class="side-text">Notifikasi &amp; Alert</span><b class="side-badge">3</b></a>
+  <a href="laporan.html" class="side-link"><span class="side-icon">▣</span><span class="side-text">Laporan</span></a>
+  <div class="side-group">
+    <button type="button" class="side-link side-toggle" aria-expanded="false"><span class="side-icon">⚙</span><span class="side-text">Pengaturan</span><span class="side-arrow">›</span></button>
+    <div class="side-sub"><div class="side-sub-inner">
+      <a href="kelola-perangkat.html" class="side-sub-link"><span class="side-icon">▤</span><span class="side-text">Kelola Perangkat</span></a>
+      <a href="ambang-batas.html" class="side-sub-link"><span class="side-icon">◫</span><span class="side-text">Ambang Batas &amp; Aturan Alert</span></a>
+      <a href="pengguna-role.html" class="side-sub-link"><span class="side-icon">☺</span><span class="side-text">Pengguna &amp; Role</span></a>
+    </div></div>
+  </div>
+</nav>
+
+        <div class="sidebar-flood">
+
+            <div class="flood-overlay">
+
+                <b>
+                    Bersama Teknologi,<br>
+                    Kita Lebih Siap<br>
+                    Menghadapi Banjir
+                </b>
+
+                <small>
+                    IoT Flood Monitor
+                </small>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+        <div class="page-header">
+
+            <div>
+                <h2>Peta Monitoring</h2>
+
+                <p>
+                    Melihat sebaran semua sensor secara geografis
+                    untuk menilai wilayah terdampak.
+                </p>
+            </div>
+
+            <div class="live-status">
+                <span></span>
+                LIVE
+            </div>
+
+        </div>
+
+
+        <section class="monitoring-layout">
+
+            <!-- LEFT PANEL -->
+
+            <aside class="monitor-panel">
+
+                <div class="sensor-search">
+
+                    <span>⌕</span>
+
+                    <input
+                        id="sensorSearch"
+                        type="text"
+                        placeholder="Cari sensor / nama lokasi"
+                    >
+
+                </div>
+
+
+                <h3>Status Sensor</h3>
+
+
+                <div class="status-grid">
+
+                    <button
+                        class="status-filter active"
+                        data-status="all"
+                    >
+                        <i class="blue"></i>
+                        Semua
+                        <b>24</b>
+                    </button>
+
+                    <button
+                        class="status-filter"
+                        data-status="Normal"
+                    >
+                        <i class="green"></i>
+                        Normal
+                        <b>18</b>
+                    </button>
+
+                    <button
+                        class="status-filter"
+                        data-status="Waspada"
+                    >
+                        <i class="yellow"></i>
+                        Waspada
+                        <b>2</b>
+                    </button>
+
+                    <button
+                        class="status-filter"
+                        data-status="Siaga"
+                    >
+                        <i class="orange"></i>
+                        Siaga
+                        <b>1</b>
+                    </button>
+
+                    <button
+                        class="status-filter"
+                        data-status="Bahaya"
+                    >
+                        <i class="red"></i>
+                        Bahaya
+                        <b>1</b>
+                    </button>
+
+                    <button
+                        class="status-filter"
+                        data-status="Offline"
+                    >
+                        <i class="gray"></i>
+                        Offline
+                        <b>2</b>
+                    </button>
+
+                </div>
+
+
+                <h3>Filter tambahan</h3>
+
+
+                <div class="filter-field">
+
+                    <label>≋ Sungai</label>
+
+                    <select id="riverFilter">
+
+                        <option value="all">
+                            Semua Sungai
+                        </option>
+
+                        <option value="Kali Banjir Kanal Barat">
+                            Kali Banjir Kanal Barat
+                        </option>
+
+                        <option value="Kali Garang">
+                            Kali Garang
+                        </option>
+
+                        <option value="Kali Bringin">
+                            Kali Bringin
+                        </option>
+
+                        <option value="Sungai Muktiharjo">
+                            Sungai Muktiharjo
+                        </option>
+
+                        <option value="Kali Tinja">
+                            Kali Tinja
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-field">
+
+                    <label>▥ Kecamatan</label>
+
+                    <select id="districtFilter">
+
+                        <option value="all">
+                            Semua Kecamatan
+                        </option>
+
+                        <option value="Semarang Barat">
+                            Semarang Barat
+                        </option>
+
+                        <option value="Semarang Selatan">
+                            Semarang Selatan
+                        </option>
+
+                        <option value="Semarang Timur">
+                            Semarang Timur
+                        </option>
+
+                        <option value="Pedurungan">
+                            Pedurungan
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="sensor-list-title">
+
+                    <b>Sensor</b>
+
+                    <span id="sensorCount">
+                        7 sensor
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="sensor-list"
+                    id="sensorList"
+                ></div>
+
+            </aside>
+
+
+            <!-- MAP -->
+
+            <section class="map-area">
+
+                <div class="map-toolbar">
+
+                    <button
+                        class="map-button active"
+                        data-map="street"
+                    >
+                        Peta
+                    </button>
+
+                    <button
+                        class="map-button"
+                        data-map="satellite"
+                    >
+                        Satelit
+                    </button>
+
+                    <button
+                        class="map-button"
+                        data-map="river"
+                    >
+                        Garis Sungai
+                    </button>
+
+                    <button
+                        class="map-button"
+                        data-map="district"
+                    >
+                        Batas Kecamatan
+                    </button>
+
+                    <button
+                        class="map-button"
+                        data-map="evacuation"
+                    >
+                        Titik Evakuasi
+                    </button>
+
+                    <button
+                        class="map-button"
+                        data-map="rain"
+                    >
+                        Radar Hujan (P2)
+                    </button>
+
+                </div>
+
+
+                <div class="map-card">
+
+                    <div id="map"></div>
+
+
+                    <button
+                        class="map-fullscreen"
+                        id="mapFullscreen"
+                        title="Layar penuh"
+                    >
+                        ⛶
+                    </button>
+
+
+                    <div class="map-legend">
+
+                        <strong>Legenda</strong>
+
+                        <span>
+                            <i class="green"></i>
+                            Normal
+                        </span>
+
+                        <span>
+                            <i class="yellow"></i>
+                            Waspada
+                        </span>
+
+                        <span>
+                            <i class="orange"></i>
+                            Siaga
+                        </span>
+
+                        <span>
+                            <i class="red"></i>
+                            Bahaya
+                        </span>
+
+                        <span>
+                            <i class="gray"></i>
+                            Offline
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="map-tools">
+
+                    <div class="tool-card">
+
+                        <h3>▤ Kontrol Layer</h3>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked
+                                data-toggle="river"
+                            >
+                            Garis Sungai
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked
+                                data-toggle="district"
+                            >
+                            Batas Kecamatan
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked
+                                data-toggle="evacuation"
+                            >
+                            Titik Evakuasi
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                data-toggle="rain"
+                            >
+                            Radar Hujan (P2)
+                        </label>
+
+                    </div>
+
+
+                    <div class="tool-card">
+
+                        <h3>◎ Lokasi Saya</h3>
+
+                        <p id="locationText">
+                            ● Posisi Anda
+                        </p>
+
+                        <button id="locationButton">
+                            Posisi saya
+                        </button>
+
+                    </div>
+
+
+                    <div class="tool-card">
+
+                        <h3>▰ Skala</h3>
+
+                        <div class="scale-line">
+                            <span></span>
+                            <small>2 km</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="tool-card">
+
+                        <h3>⛶ Layar Penuh</h3>
+
+                        <button id="toolFullscreen">
+                            ⛶ Perbesar Peta
+                        </button>
+
+                        <button id="resetMap">
+                            ↻ Cuci Peta
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RIGHT PANEL -->
+
+            <aside class="detail-panel">
+
+                <div class="detail-header">
+                    <h3>Daftar Sensor</h3>
+                </div>
+
+
+                <div
+                    class="selected-sensor"
+                    id="selectedSensor"
+                >
+
+                    <div class="selected-title">
+                        ⚠ BNA-003
+                        <span class="status-badge bahaya">
+                            Bahaya
+                        </span>
+                    </div>
+
+                    <b>Kali Banjir Kanal Barat</b>
+
+                    <div class="sensor-metric">
+                        <span>⌂ Tinggi muka air</span>
+                        <strong>248 cm</strong>
+                    </div>
+
+                    <div class="sensor-metric">
+                        <span>⌁ Tren</span>
+                        <strong class="danger-text">
+                            +12 cm/jam
+                        </strong>
+                    </div>
+
+                    <div class="sensor-metric">
+                        <span>◷ Update terakhir</span>
+                        <strong>10:02</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="detail-tabs">
+
+                    <button class="active">
+                        Ringkasan
+                    </button>
+
+                    <button>
+                        Grafik 6 Jam
+                    </button>
+
+                </div>
+
+
+                <div class="detail-content">
+
+                    <div class="location-summary">
+
+                        <div class="big-location">
+                            📍
+                        </div>
+
+                        <div>
+                            <b>Kali Banjir Kanal Barat</b>
+
+                            <small>
+                                Kecamatan<br>
+                                Semarang Barat
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="warning-box">
+
+                        <b>⚠ Status</b>
+
+                        <p>
+                            Ketinggian air sudah melewati
+                            batas aman. Segera lakukan
+                            pemantauan dan siapkan
+                            tim evakuasi.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-chart">
+
+                        <b>
+                            Grafik Tinggi Muka Air
+                            (6 jam)
+                        </b>
+
+                        <svg viewBox="0 0 300 100">
+
+                            <polyline
+                                points="
+                                0,80
+                                40,75
+                                80,72
+                                120,65
+                                160,57
+                                200,50
+                                240,40
+                                280,25
+                                300,20
+                                "
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <button
+                        class="detail-button"
+                        id="detailButton"
+                    >
+                        Lihat detail sensor →
+                    </button>
+
+
+                    <div class="special-case">
+
+                        <b>Kasus Khusus</b>
+
+                        <div>
+                            ⚠ Sensor #SMG-015 (Offline)
+                            <small>
+                                Terakhir terlihat 06:05
+                            </small>
+                        </div>
+
+                        <div>
+                            ⚠ Peta tidak dapat dimuat
+                            <small>
+                                Coba lagi dalam beberapa saat
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="js/script.js"></script>
+
+<script src="js/app.js"></script>
+</body>
+</html>
